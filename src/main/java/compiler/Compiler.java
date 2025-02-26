@@ -3,9 +3,34 @@
  */
 package compiler;
 
+import compiler.Lexer.Lexer;
+import compiler.Lexer.Symbol;
+import compiler.Lexer.TokenType;
+
+import java.io.IOException;
+import java.io.StringReader;
+
 public class Compiler {
-    public static void main(String[] args) {
-        System.out.println("Hello from the compiler !");
-        //je sais pas quoi faire ici
+    public static void main(String[] args) {//pour lancer le lexing sur inginious, pas encore trop compris
+        if (args.length == 0) {
+            System.out.println("No input provided.");
+            return;
+        }
+
+        String input = String.join(" ", args);
+        System.out.println("Lexing input: " + input);
+
+        try (StringReader reader = new StringReader(input)) {
+            Lexer lexer = new Lexer(reader);
+            Symbol symbol;
+
+            while ((symbol = lexer.getNextSymbol()).getType() != TokenType.EOF) {
+                System.out.println("Symbol: " + symbol.getType() + ", Lexeme: " + symbol.getLexeme());
+            }
+
+            System.out.println("Lexing complete.");
+        } catch (IOException e) {
+            System.err.println("Error during lexing: " + e.getMessage());
+        }
     }
 }
