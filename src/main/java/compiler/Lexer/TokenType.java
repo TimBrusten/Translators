@@ -1,0 +1,11 @@
+package compiler.Lexer;
+
+public enum TokenType {
+    LEFT_PAREN, RIGHT_PAREN,
+    LEFT_BRACE, RIGHT_BRACE,
+    PLUS, MINUS, STAR, SLASH,
+    NUMBER, IDENTIFIER,
+    IF, ELSE, WHILE, RETURN,
+    EOF, EQUAL, SEMICOLON, DOLLAR,
+    UNDERSCORE, KEYWORD
+}

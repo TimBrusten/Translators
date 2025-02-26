@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TestLexer" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-02-26T14:20:52" hostname="ASUSTIM" time="0.013">
+  <properties/>
+  <testcase name="testKeyWordHandling2" classname="TestLexer" time="0.013"/>
+  <system-out><![CDATA[Reading character: f
+Starting identifier/keyword token
+Identifier/keyword token complete: final
+final keyword
+Reading character:  
+Reading character: r
+Starting identifier/keyword token
+Identifier/keyword token complete: rec
+rec keyword
+Reading character:  
+Reading character: f
+Starting identifier/keyword token
+Identifier/keyword token complete: fun
+fun keyword
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
