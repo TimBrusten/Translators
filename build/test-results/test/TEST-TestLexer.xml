@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TestLexer" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-02-26T14:20:52" hostname="ASUSTIM" time="0.013">
+<testsuite name="TestLexer" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-02-26T15:01:50" hostname="ASUSTIM" time="0.012">
   <properties/>
-  <testcase name="testKeyWordHandling2" classname="TestLexer" time="0.013"/>
-  <system-out><![CDATA[Reading character: f
+  <testcase name="testFloatToken3" classname="TestLexer" time="0.012"/>
+  <system-out><![CDATA[Reading character:  
+Reading character: x
 Starting identifier/keyword token
-Identifier/keyword token complete: final
-final keyword
+Identifier/keyword token complete: x
+x identifier
 Reading character:  
-Reading character: r
-Starting identifier/keyword token
-Identifier/keyword token complete: rec
-rec keyword
+Reading character: =
+equal detected
 Reading character:  
-Reading character: f
-Starting identifier/keyword token
-Identifier/keyword token complete: fun
-fun keyword
+Reading character: .
+Starting number token
+Number token complete: .234.5
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

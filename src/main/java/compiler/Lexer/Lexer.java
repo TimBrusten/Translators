@@ -23,7 +23,7 @@ public class Lexer {
                 }
                 continue;
             }
-            if (currentChar == '$'){
+            if (currentChar == '$'){//handle comments
                 System.out.println("Comment detected, line number: " + line);
                 while ((currentChar = (char) input.read()) != -1 && currentChar != '\n') {
                     // Skip characters until end of line
@@ -45,10 +45,10 @@ public class Lexer {
 
             }
 
-            if (Character.isDigit(currentChar)) {
+            if (Character.isDigit(currentChar)||currentChar=='.') {//handle numbers
                 System.out.println("Starting number token");
                 return number(currentChar);
-            } else if (Character.isLetter(currentChar)) {
+            } else if (Character.isLetter(currentChar)) {//handle identifiers
                 System.out.println("Starting identifier/keyword token");
                 return identifier(currentChar);
             }
@@ -57,7 +57,10 @@ public class Lexer {
 
         }
         System.out.println("End of input reached");
-        return new Symbol(TokenType.EOF, "", line);
+        //pas ici pour print
+        Symbol newSymbol = new Symbol(TokenType.EOF, "EOF", line);
+        System.out.println(newSymbol);
+        return newSymbol;
     }
 
     private Symbol number(char first) throws IOException {
@@ -66,7 +69,7 @@ public class Lexer {
 
         input.mark(1);
         int next;
-        while ((next = input.read()) != -1 && Character.isDigit((char) next)) {
+        while ((next = input.read()) != -1 && (Character.isDigit((char) next) || ((char)next) == '.')) {
             value.append((char) next);
             input.mark(1);
         }
@@ -92,7 +95,7 @@ public class Lexer {
         String word = value.toString();
         System.out.println("Identifier/keyword token complete: " + word);
         switch (word) {
-            //case "if": return new Symbol(TokenType.IF, word, line); comme ça ou comme après
+            //case "if": return new Symbol(TokenType.IF, word, line); comme ça ou comme après ?
             case "free": System.out.println("free keyword"); return new Symbol(TokenType.KEYWORD, word, line);
             case "final": System.out.println("final keyword"); return new Symbol(TokenType.KEYWORD, word, line);
             case "rec": System.out.println("rec keyword");return new Symbol(TokenType.KEYWORD, word, line);

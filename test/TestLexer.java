@@ -26,9 +26,10 @@ public class TestLexer {
         Lexer lexer = new Lexer(reader);
         int tokenCount = 0;
 
-        while (lexer.getNextSymbol().getType() != TokenType.EOF) {
+        Symbol symbol;
+        while ((symbol = lexer.getNextSymbol()).getType() != TokenType.EOF) {
+            System.out.println("<Symbol: " + symbol.getType() + ", Lexeme: " + symbol.getLexeme()+">");
             tokenCount++;
-
         }
 
         assertEquals(6, tokenCount); // var, x, int, =, 2, ;
@@ -113,7 +114,35 @@ public class TestLexer {
 
     }
 
+    @Test
+    public void testFloatToken1() throws IOException {
+        String input = " x = 0.2345";
+        StringReader reader = new StringReader(input);
+        Lexer lexer = new Lexer(reader);
+        assertEquals(TokenType.IDENTIFIER, lexer.getNextSymbol().getType());
+        assertEquals(TokenType.EQUAL, lexer.getNextSymbol().getType());
+        assertEquals(TokenType.NUMBER, lexer.getNextSymbol().getType());
+    }
 
+    @Test
+    public void testFloatToken2() throws IOException {
+        String input = " x = .2345";
+        StringReader reader = new StringReader(input);
+        Lexer lexer = new Lexer(reader);
+        assertEquals(TokenType.IDENTIFIER, lexer.getNextSymbol().getType());
+        assertEquals(TokenType.EQUAL, lexer.getNextSymbol().getType());
+        assertEquals(TokenType.NUMBER, lexer.getNextSymbol().getType());
+    }
+
+    @Test
+    public void testFloatToken3() throws IOException {
+        String input = " x = .234.5"; //should  not be accepted
+        StringReader reader = new StringReader(input);
+        Lexer lexer = new Lexer(reader);
+        assertEquals(TokenType.IDENTIFIER, lexer.getNextSymbol().getType());
+        assertEquals(TokenType.EQUAL, lexer.getNextSymbol().getType());
+        assertEquals(TokenType.NUMBER, lexer.getNextSymbol().getType());
+    }
 
     //ajouter des tests
 
