@@ -5,7 +5,26 @@ package compiler;
 
 public class Compiler {
     public static void main(String[] args) {
-        System.out.println("Hello from the compiler !");
-        //je sais pas quoi faire ici
+
+        // This part is present for testing the first part of the project wbich is the lexer
+        if (args.length >= 2 && args[0].equals("-lexer")) {
+            String filePath = args[1];
+            try (Reader reader = new FileReader(filePath)) {
+                Lexer lexer = new Lexer(reader);
+                Symbol symbol;
+                do {
+                    symbol = lexer.getNextSymbol();
+                    System.out.println(symbol);
+                } while (symbol.getType() != TokenType.EOF);
+            } catch(IOException e) {
+                System.err.println("Error reading file: " + e.getMessage());
+                System.exit(1);
+            } catch(RuntimeException e) {
+                System.err.println("Lexing error: " + e.getMessage());
+                System.exit(1);
+            }
+        } else {
+            System.out.println("Usage: -lexer <input.lang>");
+        }
     }
 }
