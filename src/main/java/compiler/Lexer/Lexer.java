@@ -33,13 +33,13 @@ public class Lexer {
                 line++;
                 continue;
             }
-            // Gestion de la chaîne de caractères
+            // String management
             if (currentChar == '"') {
                 System.out.println("Starting string literal");
                 return stringLiteral();
             }
 
-            // Opérateurs et symboles
+            // Symbol operator
             switch (currentChar) {
                 case '(':
                     System.out.println("Left parenthesis detected");
@@ -157,7 +157,7 @@ public class Lexer {
                     break;
             }
 
-            // Si ce n'est pas un symbole reconnu, gérer les nombres et identifiants
+            // If it's not a recognized symbol, handle numbers and identifiers
             if (Character.isDigit(currentChar)) {
                 System.out.println("Starting number token");
                 return number(currentChar);
@@ -213,13 +213,13 @@ public class Lexer {
         String word = value.toString();
         System.out.println("Identifier/keyword token complete: " + word);
 
-        // Gestion des booléens
+        // boolean handling
         if (word.equals("true") || word.equals("false")) {
             System.out.println("Boolean literal detected: " + word);
             return new Symbol(TokenType.BOOLEAN_LITERAL, word, line);
         }
 
-        // Gestion des mots-clés
+        // keyword handling
         switch (word) {
             case "free":
                 System.out.println("free keyword");
