@@ -2,6 +2,8 @@ import compiler.Lexer.Symbol;
 import compiler.Lexer.TokenType;
 import org.junit.Test;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 import compiler.Lexer.Lexer;
@@ -143,6 +145,20 @@ public class TestLexer {
         assertEquals(TokenType.EQUAL, lexer.getNextSymbol().getType());
         assertEquals(TokenType.NUMBER, lexer.getNextSymbol().getType());
     }
+
+    @Test
+    public void test_lang_complete() throws IOException {
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("test_lang.txt"))) {
+            Lexer lexer = new Lexer(reader);
+            Symbol symbol;
+            do {
+                symbol = lexer.getNextSymbol();
+                System.out.println(symbol);
+            } while (symbol.getType() != TokenType.EOF);
+        }
+    }
+
 
     //ajouter des tests
 

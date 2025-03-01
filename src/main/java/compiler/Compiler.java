@@ -7,30 +7,33 @@ import compiler.Lexer.Lexer;
 import compiler.Lexer.Symbol;
 import compiler.Lexer.TokenType;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringReader;
+import java.io.Reader;
 
 public class Compiler {
-    public static void main(String[] args) {//pour lancer le lexing sur inginious, pas encore trop compris
-        if (args.length == 0) {
-            System.out.println("No input provided.");
-            return;
-        }
+    public static void main(String[] args) {
 
-        String input = String.join(" ", args);
-        System.out.println("Lexing input: " + input);
-
-        try (StringReader reader = new StringReader(input)) {
-            Lexer lexer = new Lexer(reader);
-            Symbol symbol;
-
-            while ((symbol = lexer.getNextSymbol()).getType() != TokenType.EOF) {
-                System.out.println("Symbol: " + symbol.getType() + ", Lexeme: " + symbol.getLexeme());
+        // This part is present for testing the first part of the project which is the lexer
+        if (args.length >= 2 && args[0].equals("-lexer")) {
+            String filePath = args[1];
+            try (Reader reader = new BufferedReader(new FileReader(filePath))) {//buffered to read tokens in advance
+                Lexer lexer = new Lexer(reader);
+                Symbol symbol;
+                do {
+                    symbol = lexer.getNextSymbol();
+                    System.out.println(symbol);
+                } while (symbol.getType() != TokenType.EOF);
+            } catch(IOException e) {
+                System.err.println("Error reading file: " + e.getMessage());
+                System.exit(1);
+            } catch(RuntimeException e) {
+                System.err.println("Lexing error: " + e.getMessage());
+                System.exit(1);
             }
-
-            System.out.println("Lexing complete.");
-        } catch (IOException e) {
-            System.err.println("Error during lexing: " + e.getMessage());
+        } else {
+            System.out.println("Usage: -lexer <input.lang>");
         }
     }
 }
