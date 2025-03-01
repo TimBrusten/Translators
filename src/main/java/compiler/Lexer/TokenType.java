@@ -11,8 +11,10 @@ public enum TokenType {
     GREATER_THAN, GREATER_EQUAL,
     AND, OR,
     COMMA, DOT,
-    NUMBER, STRING_LITERAL, BOOLEAN_LITERAL, IDENTIFIER,
+    NATURAL_NUMBER, FLOAT_NUMBER, STRING_LITERAL, BOOLEAN_LITERAL, IDENTIFIER,
     KEYWORD, // Ex : free, final, rec, fun, for, while, if, else, return
     EOF,
-    SEMICOLON
+    SEMICOLON,
+    TYPE
+
 }
