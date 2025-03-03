@@ -40,7 +40,7 @@ public class Symbol {
 
     @Override
     public String toString() {
-        return String.format("Symbol{type=%s, lexeme='%s'}", type, lexeme);
+        return String.format("<%s, '%s'>", type, lexeme);
     }
 }
 

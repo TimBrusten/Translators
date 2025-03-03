@@ -15,6 +15,7 @@ public enum TokenType {
     KEYWORD, // Ex : free, final, rec, fun, for, while, if, else, return
     EOF,
     SEMICOLON,
-    TYPE
+    TYPE,
+    RECORD_IDENTIFIER
 
 }

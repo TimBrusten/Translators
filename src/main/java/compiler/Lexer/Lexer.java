@@ -294,6 +294,10 @@ public class Lexer {
             return new Symbol(TokenType.BOOLEAN_LITERAL, word);
         }
 
+        if (Character.isUpperCase(first)){
+            return new Symbol(TokenType.RECORD_IDENTIFIER, word);
+        }
+
         // keyword and type handling
         switch (word) {
             case "free":
@@ -323,6 +327,12 @@ public class Lexer {
             case "return":
                 log("return keyword");
                 return new Symbol(TokenType.KEYWORD, word);
+            case "of":
+                log("of keyword");
+                return new Symbol(TokenType.KEYWORD, word);
+            case "array":
+                log("array keyword");
+                return new Symbol(TokenType.KEYWORD, word);
 
 
             case "string":
@@ -335,6 +345,7 @@ public class Lexer {
             case "bool":
                 log("boolean type");
                 return new Symbol(TokenType.TYPE, word);
+
             default:
                 log(word + " identifier");
                 return new Symbol(TokenType.IDENTIFIER, word);

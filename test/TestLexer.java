@@ -143,7 +143,9 @@ public class TestLexer {
         Lexer lexer = new Lexer(reader);
         assertEquals(TokenType.IDENTIFIER, lexer.getNextSymbol().getType());
         assertEquals(TokenType.EQUAL, lexer.getNextSymbol().getType());
-        //assertNotEquals(TokenType.FLOAT_NUMBER, lexer.getNextSymbol().getType());
+        assertEquals(new Symbol(TokenType.FLOAT_NUMBER, "0.234"), lexer.getNextSymbol());
+        assertEquals((new Symbol(TokenType.FLOAT_NUMBER, "0.5")), lexer.getNextSymbol());
+
     }
 
 
@@ -213,6 +215,50 @@ public class TestLexer {
 
     }
 
+    @Test
+    public void testUnrecognised() {
+        String input = "@";
+        StringReader reader = new StringReader(input);
+        Lexer lexer = new Lexer(reader);
+
+        RuntimeException thrown = assertThrows(RuntimeException.class, lexer::getNextSymbol);
+        assertNotNull(thrown);
+        assertTrue(thrown.getMessage().contains("Unexpected character"));
+    }
+
+    @Test
+    public void testUnrecognised1() throws IOException {
+        String input = "@ abc";
+        StringReader reader = new StringReader(input);
+        Lexer lexer = new Lexer(reader);
+
+        RuntimeException thrown = assertThrows(RuntimeException.class, lexer::getNextSymbol);
+        assertNotNull(thrown);
+        assertTrue(thrown.getMessage().contains("Unexpected character"));
+        assertEquals(new Symbol(TokenType.IDENTIFIER, "abc"), lexer.getNextSymbol());
+
+    }
+
+    @Test
+    public void testRecords() throws IOException {
+        String input = "Test Test123_23";
+        StringReader reader = new StringReader(input);
+        Lexer lexer = new Lexer(reader);
+        assertEquals(new Symbol(TokenType.RECORD_IDENTIFIER, "Test"), lexer.getNextSymbol());
+        assertEquals(new Symbol(TokenType.RECORD_IDENTIFIER, "Test123_23"), lexer.getNextSymbol());
+        assertEquals(TokenType.EOF, lexer.getNextSymbol().getType());
+
+    }
+    @Test
+    public void testRecordsMAJ() throws IOException {
+        String input = "PoInT";
+        StringReader reader = new StringReader(input);
+        Lexer lexer = new Lexer(reader);
+        assertEquals(new Symbol(TokenType.RECORD_IDENTIFIER, "PoInT"), lexer.getNextSymbol());//devrait pas passer ?
+        assertEquals(TokenType.EOF, lexer.getNextSymbol().getType());
+
+    }
+
 
 
     @Test
@@ -234,7 +280,7 @@ public class TestLexer {
             assertEquals(new Symbol(TokenType.BOOLEAN_LITERAL, "true"), lexer.getNextSymbol());
             assertEquals(new Symbol(TokenType.SEMICOLON, ";"), lexer.getNextSymbol());
 
-            assertEquals(new Symbol(TokenType.IDENTIFIER, "Point"), lexer.getNextSymbol());
+            assertEquals(new Symbol(TokenType.RECORD_IDENTIFIER, "Point"), lexer.getNextSymbol());
             assertEquals(new Symbol(TokenType.KEYWORD, "rec"), lexer.getNextSymbol());
             assertEquals(new Symbol(TokenType.LEFT_BRACE, "{"), lexer.getNextSymbol());
             assertEquals(new Symbol(TokenType.TYPE, "int"), lexer.getNextSymbol());
